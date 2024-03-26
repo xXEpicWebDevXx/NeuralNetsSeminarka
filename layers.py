@@ -1,0 +1,34 @@
+from abc import ABC, abstractmethod
+import numpy as np
+
+class AbstractLayer(ABC):
+    @abstractmethod
+    def forward():
+        pass
+    @abstractmethod
+    def backpropagate():
+        pass
+
+
+class DenseLayer(AbstractLayer):
+    def __init__(self, input_size, output_size, activation_function):
+        self.input_size = input_size
+        self.output_size = output_size
+        self.activation_function = activation_function #instance
+        
+        #Xavier Initialization - weigths and biases on interval <-1/n ; 1/n> where n is the input size
+        variance = 1/input_size
+        self.weights = (2*np.random.rand(input_size, output_size) - 1) * variance
+        self.biases = (2*np.random.rand(1,output_size) - 1) * variance
+        
+
+    def forward(self,x):
+        self.last_input = x
+        output = np.dot(x,self.weights) + self.biases
+        return self.activation_function.forward(output)
+
+    def backpropagate(self,x):
+        derived_input = self.activation_function.derived(x)
+        self.change_weights = np.dot(self.last_input.T,derived_input) / len(self.last_input)
+        self.change_biases = np.sum(derived_input, keepdims = True, axis = 0) / len(self.last_input)
+        return np.dot(derived_input,self.weights.T) / len(self.last_input)
