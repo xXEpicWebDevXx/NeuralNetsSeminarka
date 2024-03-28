@@ -33,11 +33,11 @@ class MomentumSGD(AbstractOptimizer):
                 last_weights_changes = 0
                 last_biases_changes = 0
 
-            weights_change = self.learning_rate * (layer.change_weights + last_weights_changes * self.momentum)
-            biases_change = self.learning_rate * (layer.change_biases + last_biases_changes * self.momentum)
+            weights_change = layer.change_weights + last_weights_changes * self.momentum
+            biases_change = layer.change_biases + last_biases_changes * self.momentum
 
 
 
-            layer.biases -= biases_change  
-            layer.weights -= weights_change 
+            layer.biases -= biases_change * self.learning_rate
+            layer.weights -= weights_change * self.learning_rate
             self.changes_dictionary[layer_index] = [weights_change, biases_change]

@@ -11,7 +11,7 @@ def main():
     l2 = DenseLayer(50,50, LeakyReLU())
     l3 = DenseLayer(50,1,LeakyReLU())
 
-    n = Network(MSE(), MomentumSGD(0.00003, 0.9))
+    n = Network(MSE(), MomentumSGD(0.000001, 0.9))
     n.add_layer(l1)
     n.add_layer(l2)
     n.add_layer(l3)
