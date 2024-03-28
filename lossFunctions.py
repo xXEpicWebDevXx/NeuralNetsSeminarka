@@ -17,4 +17,10 @@ class MSE(AbstractLossFunction):
     def derived(self,x, expected_x):
         return 2 * (x - expected_x)
 
+class BinaryCrossEntropy(AbstractLossFunction):
+    def forward(self, x, expected_x):
+        return -expected_x * log(x) - (1-expected_x)*(1-x)
+    def derived(self, x, expected_x):
+        return (-expected_x/x) + (1-expected_x)/(1-x)
+
 

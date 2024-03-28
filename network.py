@@ -6,7 +6,7 @@ class Network():
         self.layers = []
         self.loss_function = loss_function 
         self. optimizer = optimizer
-
+        
     def add_layer(self,layer):
         #TODO check if layer inputs match previous layer
         self.layers.append(layer)

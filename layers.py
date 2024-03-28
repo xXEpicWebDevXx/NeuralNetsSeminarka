@@ -29,6 +29,6 @@ class DenseLayer(AbstractLayer):
 
     def backpropagate(self,x):
         derived_input = self.activation_function.derived(x)
-        self.change_weights = np.dot(self.last_input.T,derived_input) / len(self.last_input)
-        self.change_biases = np.sum(derived_input, keepdims = True, axis = 0) / len(self.last_input)
-        return np.dot(derived_input,self.weights.T) / len(self.last_input)
+        self.change_weights = np.dot(self.last_input.T,derived_input)
+        self.change_biases = np.sum(derived_input, keepdims = True, axis = 0)
+        return np.dot(derived_input,self.weights.T)
