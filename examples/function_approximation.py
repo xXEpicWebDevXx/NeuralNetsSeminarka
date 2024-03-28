@@ -1,8 +1,8 @@
-from layers import DenseLayer
-from optimizers import SGD, MomentumSGD
-from activation_functions import LeakyReLU
-from network import Network
-from loss_functions import MSE
+from neura.layers import DenseLayer
+from neura.optimizers import SGD, MomentumSGD
+from neura.activation_functions import LeakyReLU
+from neura.network import Network
+from neura.loss_functions import MSE
 import numpy as np
 
 
