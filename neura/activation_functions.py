@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from numpy import ones, exp, maximum
 from numpy import max as npmax
+from numpy import clip
+
 
 class AbstractActivationFunction():
     @abstractmethod
@@ -30,12 +32,16 @@ class LeakyReLU(AbstractActivationFunction):
 
 
 
-class Sigmoid(AbstractActivationFunction):
+class Softmax(AbstractActivationFunction):
     def forward(self,x):
-        x = x - npmax(x)
-        self.last_output = 1/(1 + exp(-x))
-        return 1/(1 + exp(-x))
+        pass    
     def derived(self,x):
+        self.last_output = clip(self.last_output,10**(-7),1 - 10**(-7))
         return (self.last_output / (1 - self.last_output)) * x
 
-        
+class Sigmoid(AbstractActivationFunction):
+    def forward(self,x):
+        self.last_output = clip(1 / (1+exp(-x)),10**(-10),1 - 10**(-10))
+        return self.last_output
+    def derived(self,x):
+        return (self.last_output*(1-self.last_output))*x

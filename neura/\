@@ -64,16 +64,16 @@ class Network():
    
 
 
-    def __correct_filename(filename):
+    def __correct_filename(self,filename):
         if '.' in filename:
             filename = filename.split('.')[0]
         filename += ".pkl"
         return filename
     def save(self, filename):
-        filename = Network.__correct_filename(filename)
+        filename = self.__correct_filename(filename)
         with open(filename,"wb") as file:
             dump(self,file)
     def load(filename):
-        filename = Network.__correct_filename(filename)
+        filename = self.__correct_filename(filename)
         with open(filename,"rb") as file:
             return load(file)

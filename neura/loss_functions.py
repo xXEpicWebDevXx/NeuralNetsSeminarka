@@ -19,8 +19,9 @@ class MSE(AbstractLossFunction):
 
 class BinaryCrossEntropy(AbstractLossFunction):
     def forward(self, x, expected_x):
-        return -expected_x * np.log(x) - (1-expected_x)*np.log(1-x)
+        x = np.clip(x,10**(-7),1 - 10**(-7))
+        return np.sum(-expected_x * np.log(x) - (1-expected_x)*np.log(1-x)) / (len(x)*2)
     def derived(self, x, expected_x):
-        return (-expected_x/x) + (1-expected_x)/(1-x)
+        return ((-expected_x/x) + (1-expected_x)/(1-x))
 
 

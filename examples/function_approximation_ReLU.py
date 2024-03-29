@@ -2,7 +2,7 @@ from neura.layers import DenseLayer
 from neura.optimizers import SGD, MomentumSGD
 from neura.activation_functions import LeakyReLU
 from neura.network import Network
-from neura.loss_functions import MSE
+from neura.loss_functions import MSE, BinaryCrossEntropy
 import numpy as np
 
 
@@ -17,7 +17,7 @@ def main():
     n.add_layer(l3)
 
      
-    func = lambda x : x ** 2
+    func = lambda x : np.sqrt(x)
 
 
     inp = np.linspace(0,10,10000).astype(np.float64)
