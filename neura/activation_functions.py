@@ -1,8 +1,5 @@
 from abc import ABC, abstractmethod
-from numpy import ones, exp, maximum
-from numpy import max as npmax
-from numpy import clip
-
+import numpy as np
 
 class AbstractActivationFunction():
     '''Abstract class for defining activation functions. All activation functions in neura must inherit from this class.
@@ -40,9 +37,9 @@ class LeakyReLU(AbstractActivationFunction):
         self.gradient_of_negative_input = gradient_of_negative_input
     def forward(self, x):
         self.last_input = x
-        return maximum(x * self.gradient_of_negative_input, x)
+        return np.maximum(x * self.gradient_of_negative_input, x)
     def derived(self,x):
-        h = ones(shape = self.last_input.shape)
+        h = np.ones(shape = self.last_input.shape)
         h[self.last_input <= 0] = self.gradient_of_negative_input
         h *= x
         return h
@@ -66,7 +63,7 @@ class Sigmoid(AbstractActivationFunction):
     '''
     
     def forward(self,x):
-        self.last_output = clip(1 / (1+exp(-x)),10**(-10),1 - 10**(-10))
+        self.last_output = np.clip(1 / (1+np.exp(-x)),10**(-10),1 - 10**(-10))
         return self.last_output
     def derived(self,x):
         return (self.last_output*(1-self.last_output))*x

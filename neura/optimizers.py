@@ -5,7 +5,7 @@ class AbstractOptimizer(ABC):
     '''Abstract class for defining optimizers. All optimizers must inherit from this class
     '''
     @abstractmethod
-    def update_parameters(self, *args, **kwargs):
+    def update_parameters(self,layers, *args, **kwargs):
         pass
 
 
