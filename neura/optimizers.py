@@ -2,13 +2,21 @@ from abc import ABC, abstractmethod
 
 
 class AbstractOptimizer(ABC):
+    '''Abstract class for defining optimizers. All optimizers must inherit from this class
+    '''
     @abstractmethod
-    def update_parameters():
+    def update_parameters(self, *args, **kwargs):
         pass
 
 
 
 class SGD(AbstractOptimizer):
+    '''Stochastic gradient descend updates the weights and biases by adding the opposite of the change vectors, provided in layer backpropagation, multiplied by learning rate to them.
+    
+    Formula:
+        w = w - learning_rate * dw
+        b = b - learning_rate * db
+    '''
     def __init__(self, learning_rate):
         self.learning_rate = learning_rate
 
@@ -19,6 +27,13 @@ class SGD(AbstractOptimizer):
 
 
 class MomentumSGD(AbstractOptimizer):
+    '''Stochastic gradient descend with momentum updates weights using momentum. This enables the network to keep momentum from previous weights and biases changes, which can result in faster learning. 
+    This method is also less prone to falling into a local minimum. The magnitude of the effect of momentum can be changed by adjusting momentum variable.
+    
+    Formula:
+        w = w - learning_rate*(dw + dw_last * momentum)
+        w = b - learning_rate*(db + db_last * momentum)
+    '''
     def __init__(self, learning_rate, momentum):
         self.momentum = momentum
         self.learning_rate = learning_rate
