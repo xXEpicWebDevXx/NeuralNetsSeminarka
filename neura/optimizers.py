@@ -11,8 +11,7 @@ class AbstractOptimizer(ABC):
 
 
 class SGD(AbstractOptimizer):
-    '''Stochastic gradient descend updates the weights and biases by adding the opposite of the change vectors, provided in layer backpropagation, multiplied by learning rate to them.
-    
+    '''Stochastic gradient descend updates the weights and biases. The opposite of the change vectors (provided in layer backpropagation) multiplied by learning rate is added to the weights and biases.
     Formula:
         w = w - learning_rate * dw
         b = b - learning_rate * db
