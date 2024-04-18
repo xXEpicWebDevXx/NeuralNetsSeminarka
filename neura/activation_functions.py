@@ -59,11 +59,10 @@ class Sigmoid(AbstractActivationFunction):
         Sigmoid(x) = 1/(1+exp(-x))
     
         
-    Output is clipped within the range of <10^(-10), 1 - 10^(-10)> as to not cause division by zero
     '''
     
     def forward(self,x):
-        self.last_output = np.clip(1 / (1+np.exp(-x)),10**(-10),1 - 10**(-10))
+        self.last_output = 1 / (1+np.exp(-x))
         return self.last_output
     def derived(self,x):
         return (self.last_output*(1-self.last_output))*x
