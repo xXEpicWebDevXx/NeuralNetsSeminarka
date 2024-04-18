@@ -156,7 +156,7 @@ class Network():
 
         Parameters:
             filename: string
-                      name of the file into which the model should be saved; can be wiht or without the .pkl file extension
+                      name of the file into which the model should be saved; can be with or without the .pkl file extension
 
         '''
         filename = Network.__correct_filename(filename)
