@@ -9,7 +9,6 @@ class AbstractOptimizer(ABC):
         pass
 
 
-
 class SGD(AbstractOptimizer):
     '''Stochastic gradient descend updates the weights and biases. The opposite of the change vectors (provided in layer backpropagation) multiplied by learning rate is added to the weights and biases.
     Formula:
@@ -37,6 +36,7 @@ class MomentumSGD(AbstractOptimizer):
         self.momentum = momentum
         self.learning_rate = learning_rate
         self.changes_dictionary = {}
+ 
     def update_parameters(self,layers, *args, **kwargs):
         for layer_index, layer in enumerate(layers):
             if layer_index in self.changes_dictionary:
@@ -49,8 +49,6 @@ class MomentumSGD(AbstractOptimizer):
 
             weights_change = layer.change_weights + last_weights_changes * self.momentum
             biases_change = layer.change_biases + last_biases_changes * self.momentum
-
-
 
             layer.biases -= biases_change * self.learning_rate
             layer.weights -= weights_change * self.learning_rate

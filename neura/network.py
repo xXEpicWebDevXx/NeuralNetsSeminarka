@@ -4,6 +4,7 @@ from pickle import load, dump
 class Network():
     '''The network class is the implementation of the simplest sequential model of neural network. All layers have on input and one output. No non-linear topology of network is allowed.
     '''
+
     def __init__(self, loss_function, optimizer):
         '''
         Parameters:
@@ -11,8 +12,7 @@ class Network():
                            loss function to calculate the loss of the network and the gradient of loss
             optimizer: instance of AbstractOptimizer 
                        Optimizer that adjustst weights and biases based on gradient vectors computed in backpropagation of layers
-        '''
-        
+        '''        
         self.layers = []
         self.loss_function = loss_function 
         self. optimizer = optimizer
@@ -24,20 +24,21 @@ class Network():
             layer: instance of AbstractLayer
                    layer that will be added to the list of layers
         '''
-        
         self.layers.append(layer)
+    
     def __forward(self, x):
         for layer in self.layers:
             x = layer.forward(x)
         return x
+    
     def __backwards(self, y):
         reversed_layers = self.layers[::-1]
         for layer in reversed_layers:
             y = layer.backpropagate(y)
         self.optimizer.update_parameters(self.layers)
+    
     def __shuffle(self,a,b):
         p = np.random.permutation(len(a))
-
         return a[p],b[p]
     
     def train(self, x_data, y_data, epochs, batch_size, epoch_info = 10):
@@ -132,25 +133,12 @@ class Network():
         '''
         return self.__forward(x)
 
-    def mutate(self,mutation_factor):
-        '''Randomly changes weights and biases of all layers by number in range (-mutation_factor, mutation_factor)
-        
-        Parameters:
-            mutation_factor: float
-                             magnitude of the effect of the mutation
-
-        Formula:
-            weights = random_number_in_range(-1,1) * mutation_factor
-            biases = random_number_in_range(-1,1) * mutation_factor
-        '''
-        for layer in self.layers:
-            layer.mutate(mutation_factor)
-
     def __correct_filename(filename):
         if '.' in filename:
             filename = filename.split('.')[0]
         filename += ".pkl"
         return filename
+
     def save(self, filename):
         '''Saves network into a new .pkl file.
 
@@ -162,6 +150,7 @@ class Network():
         filename = Network.__correct_filename(filename)
         with open(filename,"wb") as file:
             dump(self,file)
+
     def load(filename):
         '''Loads a network from a file. Called from network class, not its instance.
 

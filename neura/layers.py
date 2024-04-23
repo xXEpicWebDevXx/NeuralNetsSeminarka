@@ -5,6 +5,7 @@ class AbstractLayer(ABC):
     @abstractmethod
     def forward():
         pass
+    
     @abstractmethod
     def backpropagate():
         pass
@@ -13,6 +14,7 @@ class AbstractLayer(ABC):
 class DenseLayer(AbstractLayer):
     '''Dense layer is the simplest layer in neural networks. It passes input through a linear function and then through an element-wise activation function.
     '''
+    
     def __init__(self, input_size, output_size, activation_function):
         '''
         Parameters:
@@ -26,6 +28,7 @@ class DenseLayer(AbstractLayer):
         self.input_size = input_size
         self.output_size = output_size
         self.activation_function = activation_function #instance
+        
         #Xavier Initialization - weigths and biases on interval <-1/n ; 1/n> where n is the input size
         variance = 1/input_size
         self.weights = (2*np.random.rand(input_size, output_size) - 1) * variance
@@ -53,18 +56,5 @@ class DenseLayer(AbstractLayer):
         self.change_weights = np.dot(self.last_input.T,derived_input)
         self.change_biases = np.sum(derived_input, keepdims = True, axis = 0)
         return np.dot(derived_input,self.weights.T)
-    def mutate(self,mutation_factor):
-        '''Randomly changes weights and biases by number in range (-mutation_factor, mutation_factor)
-
-        Parameters:
-            mutation_factor: float
-                             magnitude of the effect of the mutation
-
-        Formula:
-            weights = random_number_in_range(-1,1) * mutation_factor
-            biases = random_number_in_range(-1,1) * mutation_factor
-        '''
-        self.weights += (np.random.rand(shape = self.weigths.shape)-1) * mutation_factor * 2
-        self.biases += (np.random.rand(shape = self.biases.shape)-1) * np.random.rand(shape = self.biases) * mutation_factor * 2
 
 
