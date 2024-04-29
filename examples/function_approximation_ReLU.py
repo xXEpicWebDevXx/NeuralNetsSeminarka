@@ -11,7 +11,7 @@ def main():
     l2 = DenseLayer(50,50, LeakyReLU())
     l3 = DenseLayer(50,1,LeakyReLU())
 
-    n = Network(MSE(), MomentumSGD(0.000001, 0.9))
+    n = Network(MSE(), MomentumSGD(0.001, 0.9))
     n.add_layer(l1)
     n.add_layer(l2)
     n.add_layer(l3)
@@ -20,7 +20,7 @@ def main():
     func = lambda x : np.sqrt(x)
 
 
-    inp = np.linspace(0,10,10000).astype(np.float64)
+    inp = np.linspace(0,1,10000).astype(np.float64)
     inp = np.reshape(inp,(-1,1))
     out = func(inp)
 
